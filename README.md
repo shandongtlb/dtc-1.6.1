@@ -70,6 +70,10 @@ use:
 More work remains to support all of libfdt, including access to numeric
 values.
 
+<br> git clone https://git.kernel.org/pub/scm/utils/dtc/dtc.git dtc-1.6.0 -b v1.6.0
+<br> cd dtc-1.6.0/
+<br> make NO_PYTHON=1
+
 
 Tests
 -----
