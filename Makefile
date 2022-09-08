@@ -11,7 +11,7 @@
 #
 VERSION = 1
 PATCHLEVEL = 6
-SUBLEVEL = 0
+SUBLEVEL = 1
 EXTRAVERSION =
 LOCAL_VERSION =
 CONFIG_LOCALVERSION =
@@ -59,6 +59,7 @@ ifeq ($(NO_YAML),1)
 	CFLAGS += -DNO_YAML
 else
 	LDLIBS_dtc += $(shell $(PKG_CONFIG) --libs yaml-0.1)
+	CFLAGS += $(shell $(PKG_CONFIG) --cflags yaml-0.1)
 endif
 
 ifeq ($(HOSTOS),darwin)
@@ -176,12 +177,14 @@ endif
 
 
 ifneq ($(DEPTARGETS),)
+ifneq ($(MAKECMDGOALS),libfdt)
 -include $(DTC_OBJS:%.o=%.d)
 -include $(CONVERT_OBJS:%.o=%.d)
 -include $(FDTDUMP_OBJS:%.o=%.d)
 -include $(FDTGET_OBJS:%.o=%.d)
 -include $(FDTPUT_OBJS:%.o=%.d)
 -include $(FDTOVERLAY_OBJS:%.o=%.d)
+endif
 endif
 
 
@@ -318,7 +321,9 @@ ifeq ($(NO_PYTHON),0)
 TESTS_PYLIBFDT += maybe_pylibfdt
 endif
 
+ifneq ($(MAKECMDGOALS),libfdt)
 include tests/Makefile.tests
+endif
 
 #
 # Clean rules
